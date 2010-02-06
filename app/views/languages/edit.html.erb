@@ -1,0 +1,27 @@
+<% content_for :main do %>
+<h1>Editing language</h1>
+
+<% form_for(@language) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name, "Name:" %><br />
+    <%= f.text_field :name %>
+  </p>
+	<p>
+		<%= f.label :slug, "File type:" %><br />
+		<%= f.text_field :slug %>		
+	</p>
+	<p>
+	  <%= f.label :snippets_count, "Snippets count:" %><br />
+	  <%= f.text_field :snippets_count, :value => @language.snippets.count %>
+	</p>
+  <p>
+    <%= f.submit 'Save' %>
+  </p>
+<% end %>
+<% end %>
+<% content_for :right do %>
+	<div class="box">
+		<%= link_to 'Languages list', languages_path %>
+	</div>
+<% end %>

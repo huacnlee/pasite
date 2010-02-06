@@ -1,0 +1,15 @@
+<h2 style="text-align:center; color:green;">Pasite.org 注册成功！</h2>
+<p>
+你好！<span style="color:blue;"><%=h @user.name %></span>，你已经成功注册成为了 <a href="http://pasite.org">Pasite.org</a> 的会员。
+</p>
+<h3>你的注册信息</h3>
+<ul>
+  <li>用户名：<%=h @user.login %></li>
+  <li>密码：<%=h @passwd %> <span style="color:red">(注：此密码只是在注册的时候传入邮件，我们并非记录您的明文密码！)</span></li>
+</ul>
+<h3>接下来你可以：</h3>
+<ol>
+  <li><a href="http://pasite.org/code/new">发布代码</a></li>
+  <li><a href="http://pasite.org/settings">修改个人信息</a></li>
+  <li><a href="http://pasite.org/<%=h @user.login %>">你的主页 (http://pasite.org/<%=h @user.login %>) </a></li>
+</ol>

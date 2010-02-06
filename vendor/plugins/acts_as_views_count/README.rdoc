@@ -1,0 +1,41 @@
+= acts_as_views_count
+
+This plugin can help you easy to total views_count with Models, it can delay in cache.
+一个 Model 查看次数统计插件，支持统计数延迟如缓存(Rails.cache)里面，到了一定数量后在存入数据库，以提高效率
+
+== Usage
+
+=== DB
+you need add views_count field to you table.
+
+=== Model
+
+  class Post < ActiveRecord::Base
+    acts_as_views_count
+  end
+  
+  class Topic < ActiveRecord::Base
+    # set delay save to db with 30
+    acts_as_views_count :delay => 30
+  end
+  
+=== Controller
+
+  class PostsController < ApplicationController
+    def show
+      @post = Post.find(params[:id])
+      # update views_count
+      @post.update_views_count
+    end
+  end
+  
+=== View
+
+  <p>
+    view:<%= @post.views_count_s %> comment: <%= @post.comments_count %>
+  </p>
+  
+== Credits
+
+Jason Lee <huacnlee@gmail.com> - http://huacnlee.com
+  

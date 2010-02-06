@@ -1,0 +1,43 @@
+<% content_for :main do %>
+<h2>Settings</h2>
+<div id="settings">
+	<% form_for(@user,:url => "") do |f| %>
+	  <%= f.error_messages %>
+		<%= success_messages %>
+		<p>
+	    <%= f.label :login, "User name:" %><br />
+	    <%= @user.login %>
+	  </p>
+		<p>
+			<%= f.label :face , "Face:"%> <br />
+			<img src="<%= face_url(@user.email) %>" alt="face" /><br />
+			<a href="http://www.gravatar.com/">Change from gravatar</a> <label>(by Email)</label>
+		</p>	  
+		<p>
+	    <%= f.label :name, "Nick name:" %><br />
+	    <%= f.text_field :name %>
+	  </p>
+	  <p>
+	    <%= f.label :email, "Email:" %><br />
+	    <%= f.text_field :email %>
+	  </p>
+	  <p>
+	    <%= f.label :bio, "Bio:" %><br />
+	    <%= f.text_area :bio %>
+	  </p>
+	  <p>
+	    <%= f.label :url, "Blog:" %><br />
+	    <%= f.text_field :url %>
+	  </p>
+	  <p>
+	    <%= f.submit 'Update' %>
+	  </p>
+	<% end %>
+</div>
+<% end %>
+<% content_for :right do %>
+	<ul class="submenu">
+		<li><%= link_to "Settings", :controller => "home", :action => "settings" %></li>
+		<li><%= link_to "Modify password", :controller => "home", :action => "password" %></li>
+	</ul>
+<% end %>

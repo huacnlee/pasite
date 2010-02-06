@@ -1,0 +1,27 @@
+<% content_for :main do %>
+	<h2>Register<h2>
+	<div id="register">
+		<% form_for @user,:url => "register" do |f| -%>
+			<%= f.error_messages %>
+			<p>
+		    <%= f.label :name ,"Nick name:"%><br />
+		    <%= f.text_field :name %>
+		  </p>
+		  <p>
+		    <%= f.label :login, "User name:" %><br />
+		    <%= f.text_field :login %>
+		  </p>
+		  <p>
+		    <%= f.label :passwd ,"Password:"%><br />
+		    <%= f.password_field :passwd %>
+		  </p>
+		  <p>
+		    <%= f.label :email, "Email:" %><br />
+		    <%= f.text_field :email,:class => "text middle" %>
+		  </p>
+			<div class="submit">
+				<%= f.submit "Submit", :disable_with => 'Submitting...', :class => 'button submit' %> or <%= link_to "Login", :controller => "home", :action => "login" %>
+			</div>
+		<% end %>
+	</div>
+<% end %>

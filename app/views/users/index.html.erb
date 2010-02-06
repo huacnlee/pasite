@@ -1,0 +1,36 @@
+<% content_for :main do %>
+<h2>Listing users</h2>
+<div id="users">	
+	<%= success_messages %>	
+	<table class="grid">
+	  <tr class="head">
+	    <td>Name</td>
+	    <td>Login</td>
+	    <td>Email</td>
+	    <td>Admin</td>
+			<td></td>
+			<td></td>
+			<td></td>
+	  </tr>
+
+	<% @users.each do |user| %>
+	  <tr>
+	    <td><%=h user.name %></td>
+	    <td><%=h user.login %></td>
+	    <td><%=h user.email %></td>
+	    <td><%=h user.admin %></td>
+	    <td><%= link_to 'Show', user_path(user.login) %></td>
+	    <td><%= link_to 'Edit', edit_user_path(user) %></td>
+	    <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
+	  </tr>
+	<% end %>
+	</table>
+	<%= will_paginate @users %>
+</div>
+
+<% end %>
+<% content_for :right do %>
+	<div class="box">
+		<%= link_to 'New user', new_user_path %>
+	</div>
+<% end %>

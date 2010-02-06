@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>test</title>
+  <link rel="stylesheet" href="idle.css" type="text/css" media="screen" />
+</head>
+<body>  
+<div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;will_paginate&#39;</span>
+
+<span class="k">class</span> <span class="nc">PastieController</span> <span class="o">&lt;&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="c1"># will_paginate custom label</span>
+    <span class="no">WillPaginate</span><span class="o">::</span><span class="no">ViewHelpers</span><span class="o">.</span><span class="n">pagination_options</span><span class="o">[</span><span class="ss">:previous_label</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;« 上一页&#39;</span>
+    <span class="no">WillPaginate</span><span class="o">::</span><span class="no">ViewHelpers</span><span class="o">.</span><span class="n">pagination_options</span><span class="o">[</span><span class="ss">:next_label</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;下一页 »&#39;</span>
+    
+    <span class="c1"># 写入将page1,page2的数据写入缓存</span>
+    <span class="no">Rails</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;posts/page/1&#39;</span><span class="p">,</span><span class="vi">@page1</span><span class="p">)</span>
+    <span class="no">Rails</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;posts/page/2&#39;</span><span class="p">,</span><span class="vi">@page2</span><span class="p">)</span>
+    <span class="no">Rails</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;posts/index&#39;</span><span class="p">,</span><span class="vi">@index</span><span class="p">)</span>
+    <span class="c1"># 用 posts/page/* 来删除 posts/page/1,posts/page/2</span>
+    <span class="no">Rails</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;posts/page/*&#39;</span><span class="p">)</span>
+    <span class="c1"># 用 posts/* 来删除 posts/index,posts/page/1,posts/page/2</span>
+    <span class="no">Rails</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;posts/*&#39;</span><span class="p">)</span>
+  <span class="k">end</span>
+  
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="no">Code</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
+    <span class="no">Utils</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+    <span class="n">render</span> <span class="s2">&quot;show&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</body>
+</html>

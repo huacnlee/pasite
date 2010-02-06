@@ -1,0 +1,19 @@
+xml.instruct! :xml, :version=>"1.0" 
+xml.rss(:version=>"2.0"){
+  xml.channel{
+		xml.title "#{@feed_title} - Pasite"
+    xml.link APP_DOMAIN
+    xml.description("#{APP_HOST} 代码片段分享平台.")
+    xml.language('zh-cn')
+      for item in @snippets
+        xml.item do
+          xml.title h(item.title)
+          xml.description item.code_formatted    
+          xml.author item.user == nil ? "Anonymous" : item.user.name       
+          xml.pubDate(item.created_at.strftime("%a, %d %b %Y %H:%M:%S %z"))
+          xml.link url_for(:host => APP_HOST,:controller => :snippets, :action => :show,:id => item.id)
+          xml.guid url_for(:host => APP_HOST,:controller => :snippets, :action => :show,:id => item.id)
+        end
+      end
+  }
+}

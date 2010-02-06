@@ -1,0 +1,11 @@
+<h2 style="text-align:center; color:green;">Snippet 收到评论</h2>
+<p>
+你好！<span style="color:blue;"><%=h @snippet.user.name %></span>，你在 <a href="http://pasite.org">Pasite.org</a>
+上面发布的《<b><a href="http://pasite.org/code/<%= @snippet.id %>"><%=h @snippet.title %></a></b>》
+在 <%= @comment.created_at.to_s(:time_long) %> 收到了一条评论。
+</p>
+<h3>评论：</h3>
+<p>
+  <span style="color:blue"><%= @comment.title %></span> 说：<br />
+  <%= @comment.comment %>
+</p>

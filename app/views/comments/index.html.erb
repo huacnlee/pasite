@@ -1,0 +1,33 @@
+<% content_for :main do %>
+<h2>Listing comments</h2>
+<div id="comments">
+<% i = 0 %>
+<% @comments.each do |item| %>  
+  <% i += 1 %>
+  <div class="item <%= "itemse" if i % 2 == 0 %>">
+    <div class="meta">
+      <% if item.user %>
+        <%= link_to (item.user.name), :controller => "snippets", :action => "index",:login => item.user.login %>
+      <% else %>
+      <%= item.title %>
+      <% end %> at <%= time_ago_in_words(item.created_at) %>前 said:
+    </div>
+    <div class="body">
+      <%= format_comment(item.comment) %>
+    </div>
+    <div class="links">            
+      <% if item.commentable_type == "Snippet" %>
+      <%= link_to ("#{item.commentable.title}"), :controller => :snippets, :action => :show,:id => item.commentable_id %> 
+      <% end %>
+      | <%= link_to 'Destroy', item, :confirm => 'Are you sure?', :method => :delete %>
+    </div>
+  </div> 
+<% end %>
+</div>
+<div class="pages">
+<%= will_paginate @comments %>
+</div>
+<% end %>
+<% content_for :right do %>
+	<%= link_to 'New comment', new_comment_path %>
+<% end %>

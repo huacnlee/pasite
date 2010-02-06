@@ -1,0 +1,13 @@
+= Pastie
+
+Share you source code snippets on the web.
+
+This project was cloned of pastie.org, because it was blocked under China internet.
+
+I created the http://pasite.org
+
+
+
+
+
+

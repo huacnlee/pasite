@@ -1,0 +1,88 @@
+<% content_for :head do %>
+    <%= auto_discovery_link_tag(:rss, :action => "index", :type => "feed") %>
+<% end %>
+<% content_for :main do  %>
+<h2><%= @sub_title %> <%= link_to (image_tag("feed.gif",:alt => "Subscription code",:class => "feed")), :action => "index", :type => "feed"  %></h2>
+<div id="snippets">
+  <div class="pages">
+    <%= will_paginate @snippets %>
+  </div>
+  <div class="total">
+    There have <%= @snippets_count %> pasites 
+  </div>
+  <% @snippets.each do |snippet| %>
+  <div class="item clearfix">
+    <div class="when">      
+      <span class="typo_date" title="<%= snippet.created_at %>"><%= snippet.created_at.to_s(:short_time_string) %></a>
+      <% if !snippet.user.blank? %>
+        by <%= link_to (truncate(snippet.user.name,:length => 10)) ,:action => "index", :login => snippet.user.login %>
+            <% else %>
+            by Anonymous
+        <% end %>
+    </div>
+    <div class="link">      
+      #<%= snippet.id %> <%= link_to (truncate(h(snippet.title),:length => 50)), snippet %> 
+            <span class="lang">[<%= snippet.language.name %>]</span>
+            <span  class="count">(<%= snippet.line_count %> lines,<%= snippet.comments_count %> comments)</span>
+    </div>
+    <div class="summary">
+      <%= snippet.summary_formatted_show %>
+    </div>  
+  </div>
+  <% end %>  
+  <div class="pages">
+    <%= will_paginate @snippets %>
+  </div>
+</div>
+<% end %>
+<% content_for :right do %>
+  <% if @user %>
+  <div class="box" id="right_profile">
+    <h3>Profile</h3>
+    <ul>
+      <li>        
+        <img src="<%= face_url(@user.email) %>" alt="<%= @user.name %>'s face" />
+      </li>   
+      <li><label>Name:</label> <%=h @user.name %></li>
+      <li class="clearfix"><%= @user.snippets_count %> <label>snippts</label>, <%= @user.comments_count %> <label>comments</label></li>
+      <li><label>Blog:</label> <a href="<%=  @user.url %>" target="_blank"><%= @user.url %></a></li>
+      <li><label>Bio:</label> <%=h @user.bio %></li>
+    </ul>
+  </div>    
+  <% else %>
+  <div class="box" id="right_top_languages">    
+    <h3>Top Languages</h3>
+    <ul>
+      <% if !@top_languages.blank? %>
+        <% for item in @top_languages%>
+          <li><%= link_to (h item.name), :controller => "snippets", :action => "index", :lang => item.slug %> <span class="count">(<%= item.snippets_count %>)</span></li>
+        <% end %>
+      <% end %>      
+    </ul>
+  </div>  
+    <% if @snippets.size > 1 %>
+  <div class="box" id="right_top_users">
+    <h3>Top Users</h3>
+    <ul>
+      <% if !@top_users.blank? %>
+        <% for item in @top_users  %>
+          <li><%= link_to (h item.name), :controller => "snippets", :action => "index", :login => item.login %> <span class="count">(<%= item.snippets_count %>)</span></li>
+        <% end %>      
+      <% end %>      
+    </ul>
+  </div>
+    <% end %>
+    <% if @snippets.size > 3 %>
+        <div class="box" id="recent_comments">
+        <h3>Recent Comments</h3>
+        <ul>
+          <% if !@recent_comments.blank? %>
+            <% for item in @recent_comments  %>
+              <li><%= link_to (truncate(h(item.title),:length => 10)), :controller => "snippets", :action => "show", :id => item.commentable_id %>: <%= truncate(h(item.comment),:length => 40) %></li>
+            <% end %>      
+          <% end %>      
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

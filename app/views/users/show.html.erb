@@ -1,0 +1,40 @@
+<% content_for :main do %>
+<p>
+  <b>Name:</b>
+  <%=h @user.name %>
+</p>
+
+<p>
+  <b>Login:</b>
+  <%=h @user.login %>
+</p>
+
+<p>
+  <b>Passwd:</b>
+  <%=h @user.passwd %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @user.email %>
+</p>
+
+<p>
+  <b>Bio:</b>
+  <%=h @user.bio %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @user.url %>
+</p>
+
+<p>
+  <b>Admin:</b>
+  <%=h @user.admin %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
+<% end %>

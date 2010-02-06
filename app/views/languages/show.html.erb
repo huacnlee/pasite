@@ -1,0 +1,18 @@
+<% content_for :main do %>
+<p>
+  <b>Name:</b>
+  <%=h @language.name %>
+</p>
+<p>
+	<b>File type:</b>
+	<%= h @language.slug %>
+</p>
+<p>
+	<b>Snippets count:</b>
+	<%= h @language.snippets_count %>
+</p>
+
+
+<%= link_to 'Edit', edit_language_path(@language) %> |
+<%= link_to 'Back', languages_path %>
+<% end %>

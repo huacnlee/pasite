@@ -1,0 +1,138 @@
+<% content_for :styles do %>
+    <%= stylesheet_link_tag "themes/#{@theme_name}.css" %>
+<% end %>
+<% content_for :scripts do %>
+<% end %>
+<% content_for :main do %>
+<%= success_messages %>
+<h2>#<%= @snippet.id %> <%=h @snippet.title %> <%= image_tag("icons/private.gif",:alt => "Private") if @snippet.private %></h2>
+<div id="snippet_show">	
+	<div class="snippet_code">		
+		<%=@snippet.code_formatted_show %>
+	</div>
+  <% if !@snippet.desc.blank? %>
+  <div class="desc">
+    <%= format_comment @snippet.desc %>
+  </div>
+  <% end  %>
+	<div class="comments" id="comments">
+	  <h2>Comments<span class="count">(<%= @snippet.comments_count %>)</span></h2>
+	  <% i = 0 %>
+	  <% if !@snippet.comments.blank? %>
+		  <% for item in @snippet.comments %>
+		  <% i += 1 %>
+    <div class="item<%= " itemse" if i % 2 == 0 %>">
+      <div class="meta">
+        #<%= i %> <% if item.user %>
+          <%= link_to (item.user.name), :controller => "snippets", :action => "index",:login => item.user.login %>
+        <% else %>
+        <%= item.title %>
+        <% end %> at <%= time_ago_in_words(item.created_at) %>前 said:
+      </div>
+      <div class="body">
+        <div class="face">
+          <% if item.user %>
+          <a href="<%= url_for(:controller => "snippets", :action => "index",:login => item.user.login) %>"><img src="<%= face_url(item.user.email,48) %>" alt="<%= item.user.name %>" /></a>
+          <% end %>
+        </div>
+        <%= format_comment(item.comment) %>
+      </div>      
+    </div>
+		  <% end %>
+		<% else %>
+		<div class="item">
+		    No comment.
+		</div>
+		<% end %>	  				
+	</div>	
+	<div id="comment_new">
+  	<div class="form">	
+  		<% form_for @comment,:url => "/code/#{params[:id]}/comment" do |f|%>
+  		<%= f.error_messages %>	  
+  		<% if @current_user %>
+  		<%= f.hidden_field :title, :value => @current_user.name %>
+  		<% else %>
+      <div class="row">
+        <%= f.label :title,"Name:" %><br />
+        <%= f.text_field :title ,:class => "short" %>				
+  		</div>
+    	<div class="row">
+    	  <%= captcha_hidden_text %>
+    	  <%= captcha_input_text("Captcha:<br />") %><br /> 	  
+        <label>Unregistered user must enter the Captcha, <%= link_to "login", login_path %> </label><br />
+    	  <%= captcha_image %> 	
+    	</div>
+  		<% end %>
+  		<div class="row">
+        <%= f.label :comment,"Comment:" %><br />
+        <%= f.text_area :comment ,:class => "text", :rows => 4, :cols => 50 %>				
+  		</div>
+  		<div class="row">
+  		  <%= f.submit "Post comment", :disable_with => 'Submiting...' %>
+  		</div>
+  	  <% end %>		
+  	</div>	
+	</div>
+</div>
+<% end %>
+<% content_for :right do %>
+  <form action="" method="get">
+	<div class="theme">	  
+		<label>Theme:</label><br />
+		<select name="theme" onchange="this.form.submit();">		  
+		  <% if !APP_THEMES.blank? %>
+		    <% i = 0 %>
+		    <% for item in APP_THEMES %>
+		      <option value="<%= item.parameterize('_').to_s %>"<%= ' selected="selected"' if @theme_name == "#{item.parameterize('_').to_s}" %>><%= APP_THEMES_NAMES[i] %></option>
+          <% i += 1 %>
+		    <% end %>
+		  <% else %>
+		    <option value="idle">IDLE</option>
+		  <% end %>
+		</select>
+	</div>
+  </form>
+	<div style="margin: 1em 0pt 0em; font-size: 0.75em;">
+		<div style="float: left;">
+			<%= link_to (image_tag("button_raw.png",:alt => "view raw file")), :controller => "snippets", :action => "show", :format => :raw, :id => @snippet.id %>
+		</div>
+		<div style="padding-top: 2px; margin-left: 68px;">
+			<span style="color: rgb(153, 153, 153);">or</span> <%= link_to "HTML Code", :controller => "snippets", :action => "show", :format => :code, :id => @snippet.id %>
+		</div>
+	</div>
+	<% if !@snippet.user.blank? %>
+	<p class="box">
+		<label>Author</label><br />
+		<%= link_to (h @snippet.user.name), :controller => "snippets", :action => "index", :login => @snippet.user.login %>
+	</p>
+	<% end %>
+	<p class="box">
+		<label>Pasted</label><br />
+		<%= time_ago_in_words(@snippet.created_at) %>前
+	</p>
+	<p class="box">
+		<label>Language</label><br />
+		<%= link_to (h @snippet.language.name), :controller => "snippets", :action => "index", :lang => @snippet.language.slug %>
+	</p>
+	<p class="box">
+		<label>File size<label><br />
+		<%=h @snippet.size_kb %>
+	</p>
+  <p class="box">
+    <label>Views count<label><br />
+    <%=h @snippet.views_count_s  %>
+  </p>
+	<p class="box tags">
+		<% if !@snippet.tags.blank? %>
+		<label>Tags</label><br />		
+		  <% for item in @snippet.tags %>
+		    <span class="tag_name"><%= link_to (h item.name), :controller => "snippets", :action => "index", :tag => (h item.name.downcase) %></span>
+		  <% end %>		
+		<% end %>
+	</p>
+	<% if has_permission(@snippet) %>
+	<p class="box operate">
+			<%= link_to 'Edit', edit_snippet_path(@snippet) %> | <%= link_to 'Destroy', @snippet, :confirm => 'Are you sure?', :method => :delete %>
+	</p>
+	<% end %>
+<% end %>

@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title><%= @page_title %></title>
+  <link rel="shortcut icon" href="/favicon.ico?v=001" />
+  <%= stylesheet_link_tag "src/base","src/pasite", :cache => "pasite" %>  
+  <%= yield :styles %>
+  <%= yield :head %>
+</head>
+<body>
+  <%= yield :scripts %>
+  <div id="header">
+      <ul id="nav">
+        <li<%= ' class="hot active"' if params[:controller] == "snippets" and params[:action] == "new" %>>
+          <%= link_to "New", :controller => "snippets", :action => "new" %>
+        </li>
+        <li<%= ' class="hot active"' if params[:controller] == "snippets" and params[:action] == "index" %>>
+					<%= link_to "All", :controller => "snippets", :action => "index" %>
+				</li>
+				<% if @is_admin %>
+				<li<%= ' class="hot active"' if params[:controller] == "languages"%>><%= link_to "Languages", :controller => "languages", :action => "index" %></li>
+				<li<%= ' class="hot active"' if params[:controller] == "comments"%>><%= link_to "Comments", :controller => "comments", :action => "index" %></li>
+				<li<%= ' class="hot active"' if params[:controller] == "users"%>><%= link_to "Users", :controller => "users", :action => "index" %></li>
+				<% end %>
+				<li><a href="/help">Help</a></li>        
+				<% if @current_user %>
+				<li class="userbar">Hi <%= @current_user.name %></li>
+				<li><%= link_to "Me", :controller => "snippets", :action => "index", :login => @current_user.login %></li>
+				<li<%= ' class="hot active"' if params[:controller] == "home" and params[:action] == "settings" %>><a href="/settings">Settings</a></li>
+				<li><a href="/logout">Logout</a></li>
+				<% else %>
+				<li<%= ' class="hot active"' if params[:controller] == "home" and params[:action] == "register" %>>
+					<a href="/register">Register</a>
+				</li>
+				<li<%= ' class="hot active"' if params[:controller] == "home" and params[:action] == "login" %>>
+					<a href="/login">Login</a>
+				</li>
+				<% end %>
+      </ul>
+      <div id="site_logo">
+        <a href="/"><%= image_tag("pastie.gif") %> Pasite.org</a>
+      </div>
+  </div>
+  <div id="container">
+    <div id="content">
+      <%= yield :main %>
+    </div>
+	<div id="right">
+	<%= yield :right %>
+	</div>
+  </div>
+  <div id="footer">
+    <p class="copyright">
+      &copy; 2009 Pasite.org ,version:<%= APP_VERSION %>
+      <br />Powered by <a href="http://rubyonrails.org" target="_blank">Ruby on Rails</a> , persisted by MySQL, served by Nginx and secured by Ubuntu Server.
+      <br /><a href="http://huacnlee.com" target="_blank">Huacnlee</a> created, theme by <a href="http://pasite.org">Pasite</a>.
+	  <br /><a href="http://pasite.uservoice.com" target="_blank">Feedback</a> | <a href="/links">Links</a>        
+    </p>
+  </div>
+	<script type="text/javascript">var sitebot_JsHost = "http://track.sitebot.cn/";var sitebot_userid = "NDg2";var sitebot_websiteid = "NzU5MDE4"; var sitebot_lang = "zh_CN";</script><script src="http://track.sitebot.cn/track.js" type="text/javascript"></script><a href="http://de.sitebro.com"><img src="http://de.sitebro.com/img/px.gif" width="1" height="1" style="border:none;" /></a>
+  <script type="text/javascript">
+    var uservoiceJsHost = ("https:" == document.location.protocol) ? "https://uservoice.com" : "http://cdn.uservoice.com";
+  </script>
+  <%= javascript_include_tag "uservoice/tab" %>
+  <script type="text/javascript">
+      UserVoice.Tab.show({ 
+        /* required */
+        key: 'pasite',
+        host: 'pasite.uservoice.com', 
+        forum: '27192', 
+        /* optional */
+        alignment: 'left',
+        background_color:'#2244CC', 
+        text_color: 'white',
+        hover_color: '#06C',
+        lang: 'cn'
+      })
+  </script>
+</body>
+</html>

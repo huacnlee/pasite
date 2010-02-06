@@ -1,0 +1,44 @@
+<% content_for :main do %>
+<h2>Editing user</h2>
+<div id="user_edit">
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+	
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :login %><br />
+    <%= f.text_field :login %>
+  </p>
+  <p>
+    <%= f.label :passwd %><br />
+    <%= f.text_field :passwd %>
+  </p>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :bio %><br />
+    <%= f.text_area :bio %>
+  </p>
+  <p>
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    <%= f.check_box :admin %><%= f.label :admin %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+</div>
+<% end %>
+<% content_for :right do %>
+	<div class="box">
+		<%= link_to 'Users list', users_path %>			
+	</div>
+<% end %>
