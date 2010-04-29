@@ -4,7 +4,7 @@ class Mailer < ActionMailer::Base
   def regist_successed(user,passwd_unencoded)
     subject "欢迎加入 Pasite.org"
     recipients user.email
-    from 'No Reply Pasite.org<no-reply@pasite.org>'
+    from 'no-reply@pasite.org'
     sent_on Time.now 
     body_array = {:user => user, :passwd => passwd_unencoded}
     body body_array
@@ -14,7 +14,7 @@ class Mailer < ActionMailer::Base
   def snippet_got_comment(comment,snippet)
     subject "Pasite.org 评论提醒"
     recipients snippet.user.email
-    from 'No Reply Pasite.org<no-reply@pasite.org>'
+    from 'no-reply@pasite.org'
     sent_on Time.now
     body_array = {:comment => comment, :snippet => snippet}
     body body_array
@@ -31,7 +31,7 @@ class Mailer < ActionMailer::Base
   # snippet got comment tip
   def self.snippet_got_comment(comment,snippet)
     Thread.new {
-      Mailer.deliver_snippet_got_comment(comment,snippet)
+    	Mailer.deliver_snippet_got_comment(comment,snippet)
     }
   end
 end

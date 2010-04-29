@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -75,6 +75,7 @@ require 'will_paginate'
 ActionMailer::Base.default_content_type = "text/html"
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.default_charset = "utf-8"
+ActionMailer::Base.default_url_options[:host] = "http://pasite.org"
 ActionMailer::Base.raise_delivery_errors = true
 ActionMailer::Base.smtp_settings = {
   :address => "smtp.gmail.com",

@@ -1,0 +1,20 @@
+test:
+  ttl: 604800
+  namespace: pasite_test
+  sessions: false
+  debug: false
+  servers: 127.0.0.1:11211
+  
+development:
+  ttl: 604800
+  namespace: pasite_development
+  sessions: false
+  debug: true
+  servers: 127.0.0.1:11211
+
+production:
+  ttl: 604800
+  namespace: pasite
+  sessions: false
+  debug: false
+  servers: 127.0.0.1:11211
