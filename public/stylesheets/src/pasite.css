@@ -50,12 +50,9 @@ input.long { width:750px; }
 	color:#999999;
 	font-size:0.7em;
 }
-div.pages {
-	float:right;
-	font-size:0.8em;
-	margin-top:0.25em;
-}
-.pagination { display:inline;}
+
+.pagination {margin-top:8px; clear: both; font-size:0.9em; float:right;}
+#snippets .pagination { display:inline; margin-top: 0;}
 .pagination a, .pagination span { border:1px solid #DDDDDD;padding:2px 5px;text-decoration:none;}
 .pagination span {-moz-background-clip:border;-moz-background-inline-policy:continuous;-moz-background-origin:padding;
 background:black none repeat scroll 0 0;border:1px solid #666666;color:white;}
@@ -413,6 +410,7 @@ font-family:'Lucida Grande',Tahoma,Arial,Helvetica,sans-serif;
 font-size:0.8em;
 font-weight:normal;
 }
+samp.hint { font-size:0.7em; color:#999;}
 .hi *, .hi span {
 background-color:transparent !important;
 }
