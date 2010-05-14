@@ -24,7 +24,8 @@
   </div>
 	<div class="row">
 		<%= f.label :tags, "Tags:" %><br />		
-		<%= text_field_tag("snippet[tag_list]",@snippet.tags.join(","),:class => "text long") %>
+		<%= text_field_tag("snippet[tag_list]",@snippet.tags.join(","),:class => "text long") %><br />
+		<samp class="hint">Split with comma between Tag, for example: mysql,linux,performance,cache</samp>
 	</div>
 	<% if @current_user.blank? %>
 	<div class="row">
