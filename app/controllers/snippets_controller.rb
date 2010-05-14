@@ -2,8 +2,19 @@ class SnippetsController < ApplicationController
   # GET /snippets
   # GET /snippets.xml
   before_filter :require_login, :only => [:edit,:update,:destroy]
+  before_filter :init_sidebar, :only => [:index, :search]
   validates_captcha
   
+  private
+  def init_sidebar
+    @top_languages = Language.find_top      
+    if not @user
+      @top_users = User.find_top_by_snippets_count
+      @recent_comments = Comment.snippet_recent(5)
+    end
+  end
+  
+  public
   def index 
     @sub_title = ""
     @snippets_count = 0
@@ -38,12 +49,6 @@ class SnippetsController < ApplicationController
       @feed_title = "Recent snippets"
       set_seo_meta(nil)
     end   
-     
-    @top_languages = Language.find_top      
-    if not @user
-      @top_users = User.find_top_by_snippets_count
-      @recent_comments = Comment.snippet_recent(10)
-    end
     
     if params[:type] == "feed"
       # Set the content type to the standard one for RSS
@@ -94,7 +99,8 @@ class SnippetsController < ApplicationController
       else
         
         if @comment.save
-          redirect_to :controller => :snippets, :action => :show,:id => params[:id],:anchor => "comments"
+          success_notice('Comment successfully created.', :comments)
+          redirect_to snippet_path(params[:id],:anchor => "comments")
         else
           render :action => "show",:archor => "comments"
         end     
@@ -147,7 +153,7 @@ class SnippetsController < ApplicationController
     else
       respond_to do |format|
         if @snippet.save
-          flash[:notice] = 'Snippet was successfully created.'
+          success_notice('Snippet was successfully created.')
           format.html { redirect_to(@snippet) }
           format.xml  { render :xml => @snippet, :status => :created, :location => @snippet }
         else
@@ -167,7 +173,7 @@ class SnippetsController < ApplicationController
         
     respond_to do |format|
       if @snippet.update_attributes(params[:snippet])
-        flash[:notice] = 'Snippet was successfully updated.'
+        success_notice('Snippet was successfully updated.')
         format.html { redirect_to(@snippet) }
         format.xml  { head :ok }
       else
@@ -182,10 +188,30 @@ class SnippetsController < ApplicationController
   def destroy
     @snippet = Snippet.find(params[:id])
     @snippet.destroy
+    success_notice("Snippet was deleted.")
 
     respond_to do |format|
       format.html { redirect_to(snippets_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  def search
+    if !@current_user
+      error_notice("Sorry, currently only allows registered users to use search function, <br />
+      you can register and sign in before using this feature.")
+      redirect_to register_path
+      return
+    end
+    
+    if params[:s].blank?
+      redirect_to snippets_path
+      return
+    end
+    
+    @snippets = Snippet.search_with_page(params[:s].split("\s"),:page => params[:page])    
+    @snippets_count = @snippets.count
+    @sub_title = "Search snippets by \"#{params[:s]}\""
+    render :action => "index"
   end
 end

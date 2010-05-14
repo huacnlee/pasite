@@ -4,7 +4,7 @@
 <% content_for :scripts do %>
 <% end %>
 <% content_for :main do %>
-<%= success_messages %>
+<%= notice_message %>
 <h2>#<%= @snippet.id %> <%=h @snippet.title %> <%= image_tag("icons/private.gif",:alt => "Private") if @snippet.private %></h2>
 <div id="snippet_show">	
 	<div class="snippet_code">		
@@ -45,6 +45,7 @@
 		</div>
 		<% end %>	  				
 	</div>	
+	<%= notice_message(:comments) %>
 	<div id="comment_new">
   	<div class="form">	
   		<% form_for @comment,:url => "/code/#{params[:id]}/comment" do |f|%>

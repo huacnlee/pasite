@@ -10,7 +10,7 @@ class HomeController < ApplicationController
             passwd_unencoded = @user.passwd
 			@user.passwd = User.encode(@user.passwd)
 			if @user.save
-				save_notice("Register successed.")
+				success_notice("Register successed.")
                 # send regist successed mail to user Email
                 Mailer.regist_successed(@user,passwd_unencoded)
 				save_login(@user)
@@ -59,7 +59,7 @@ class HomeController < ApplicationController
 			p = params[:user]
 			p[:admin] = @user.admin
 			if @user.update_attributes(p)
-        save_notice('User was successfully updated.')
+        success_notice('User was successfully updated.')
         redirect_to :controller => "home", :action => "settings"
       else
         render :action => "settings"
@@ -70,7 +70,7 @@ class HomeController < ApplicationController
 	def password
 		if request.method == :put
       if @current_user.update_passwd(params[:old_passwd], params[:new_passwd], params[:confirm_passwd])
-        save_notice("Password changed.")
+        success_notice("Password changed.")
         redirect_to :action => "password"
       end
     end

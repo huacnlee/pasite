@@ -59,5 +59,10 @@ class Snippet < ActiveRecord::Base
 			:include => [:user,:language]
 	end
 
-    
+  # == search snippets
+  #   keys => split by space, etc. "Ruby on Rails" => ["ruby","on","rails"]
+  def self.search_with_page(keys = [], options = {})
+    page = options[:page] || 1
+    Snippet.title_like_all_or_desc_like_all(keys).find_page(page)
+  end
 end

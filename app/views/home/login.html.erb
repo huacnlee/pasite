@@ -1,4 +1,5 @@
 <% content_for :main do %>
+<%= notice_message %>
 <h2>Login</h2>
 <div id="signin">
 	<% form_for @user,:url => "login" do |f| -%>
@@ -8,7 +9,7 @@
 		</div>
 		<% end %>
 		<p>
-			<%= f.label :email, "Email:" %><br />
+			<%= f.label :email, "Email or Username:" %><br />
 			<%= f.text_field :email,:class => 'text' %>	
 		</p>
 		<p>

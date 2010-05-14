@@ -6,11 +6,11 @@
   <title><%= @page_title %></title>
   <link rel="shortcut icon" href="/favicon.ico?v=001" />
   <%= stylesheet_link_tag "src/base","src/pasite", :cache => "pasite" %>  
-  <%= yield :styles %>
+	<%= yield :styles %>
   <%= yield :head %>
 </head>
 <body>
-  <%= yield :scripts %>
+  <%= javascript_include_tag("src/jquery","src/jquery.scrollto",:cache => "jquery") %>
   <div id="header">
       <ul id="nav">
         <li<%= ' class="hot active"' if params[:controller] == "snippets" and params[:action] == "new" %>>
@@ -63,7 +63,7 @@
   <script type="text/javascript">
     var uservoiceJsHost = ("https:" == document.location.protocol) ? "https://uservoice.com" : "http://cdn.uservoice.com";
   </script>
-  <%= javascript_include_tag "uservoice/tab" %>
+  <%= javascript_include_tag "src/uservoice/tab", :cache => "uservoice/tab" %>
   <script type="text/javascript">
       UserVoice.Tab.show({ 
         /* required */

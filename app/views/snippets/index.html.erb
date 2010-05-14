@@ -3,6 +3,7 @@
 <% end %>
 <% content_for :main do  %>
 <h2><%= @sub_title %> <%= link_to (image_tag("feed.gif",:alt => "Subscription code",:class => "feed")), :action => "index", :type => "feed"  %></h2>
+<%= notice_message %>
 <div id="snippets">
   <div class="pages">
     <%= will_paginate @snippets %>
@@ -50,6 +51,13 @@
     </ul>
   </div>    
   <% else %>
+	<div class="box" id="search_box">
+		<form action="<%= search_snippets_path %>" method="get">
+			<label for="search_key">Search:</label><br />
+      <input type="text" name="s" value="<%= h params[:s] %>" id="search_key"> 
+      <input type="submit" value="Go" /> 
+		</form>
+	</div>
   <div class="box" id="right_top_languages">    
     <h3>Top Languages</h3>
     <ul>

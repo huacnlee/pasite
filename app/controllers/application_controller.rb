@@ -10,9 +10,18 @@ class ApplicationController < ActionController::Base
   before_filter :init_filter
 
   def init_filter
-  	check_login		
+  	check_login	
+  	
+  	if not /user\/register|user\/login|user\/logout/.match(request.env["HTTP_REFERER"])
+      session[:referer] = request.env["HTTP_REFERER"] 
+    end	
   end
 
+  def redirect_back(default)
+    redirect_to(session[:referer] || default)
+    session[:referer] = nil
+  end
+  
   # 输出404错误
   def render_404
     render_optional_error_file(404)
@@ -45,8 +54,24 @@ class ApplicationController < ActionController::Base
     return true
   end
 
-  def save_notice(notice)
-    flash[:notice] = notice
+  # save flash notice
+  def save_notice(notice,error = false,mark = :default)
+    flash[mark] = {}
+    if error
+      flash[mark][:notice_error] = notice
+    else
+      flash[mark][:notice_success] = notice  
+    end    
+  end
+
+  # save error message in flash
+  def error_notice(notice,mark = :default)
+    save_notice(notice,true,mark)
+  end
+  
+  # save success message in flash
+  def success_notice(notice,mark = :default)
+    save_notice(notice,false,mark)
   end
 
   def save_login(user)
