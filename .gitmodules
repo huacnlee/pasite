@@ -1,0 +1,11 @@
+[submodule "vendor/plugins/captcha"]
+  path = vendor/plugins/captcha
+  url = git://github.com/huacnlee/captcha.git
+
+[submodule "vendor/plugins/smurf"]
+  path = vendor/plugins/smurf
+  url = git://github.com/huacnlee/smurf.git
+
+[submodule "vendor/plugins/acts_as_views_count"]
+  path = vendor/plugins/acts_as_views_count
+  url = git://github.com/huacnlee/acts_as_views_count.git
