@@ -23,12 +23,15 @@
     </div>
     <div class="link">      
       #<%= snippet.id %> <%= link_to (truncate(h(snippet.title),:length => 50)), snippet %> 
+			<%= image_tag("icons/private.gif",:alt => "Private", :title => "This is private snippet, it's only for owner.") if snippet.private %>
             <span class="lang">[<%= snippet.language.name %>]</span>
             <span  class="count">(<%= snippet.line_count %> lines,<%= snippet.comments_count %> comments)</span>
     </div>
+		<% if has_permission(snippet) or (snippet.private == false) %>
     <div class="summary">
       <%= snippet.summary_formatted_show %>
-    </div>  
+    </div>
+		<% end %>
   </div>
   <% end %>  
   <div class="pages">

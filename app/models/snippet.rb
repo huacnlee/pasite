@@ -52,9 +52,7 @@ class Snippet < ActiveRecord::Base
 	
 	# find method
 	def self.find_page(page = 1)		
-		conditions = ["private = ?",false]
 		paginate :page => page, :per_page => 8,
-			:conditions => conditions, 
 			:order => "id desc",
 			:include => [:user,:language]
 	end

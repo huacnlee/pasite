@@ -10,7 +10,7 @@
   <%= yield :head %>
 </head>
 <body>
-  <%= javascript_include_tag("src/jquery","src/jquery.scrollto",:cache => "jquery") %>
+  <%= javascript_include_tag("src/jquery","src/jquery.scrollto",:cache => "jquery_all") %>
   <div id="header">
       <ul id="nav">
         <li<%= ' class="hot active"' if params[:controller] == "snippets" and params[:action] == "new" %>>
