@@ -10,8 +10,10 @@
 			<%= f.label :language, "Language:" %>
 			<% languages_array = Language.all.map { |l| [l.name, l.id] } %>		
 			<%= f.select(:language_id,languages_array) %>		
+			<% if @current_user %>
 			<%= f.check_box :private %>
 			<%= f.label :private, (image_tag("icons/private.gif",:alt => "Private")) %>		
+			<% end %>
 		</div>
   </div>
   <div class="row">
