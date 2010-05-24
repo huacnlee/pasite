@@ -410,7 +410,7 @@ font-family:'Lucida Grande',Tahoma,Arial,Helvetica,sans-serif;
 font-size:0.8em;
 font-weight:normal;
 }
-samp.hint { font-size:0.7em; color:#999;}
+samp.hint { font-size:10px; color:#999;}
 .hi *, .hi span {
 background-color:transparent !important;
 }

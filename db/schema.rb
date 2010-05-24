@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091127000002) do
+ActiveRecord::Schema.define(:version => 20100524221809) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -34,21 +34,24 @@ ActiveRecord::Schema.define(:version => 20091127000002) do
   end
 
   create_table "snippets", :force => true do |t|
-    t.string   "title",                                :null => false
-    t.text     "code",                                 :null => false
-    t.text     "code_formatted",                       :null => false
-    t.float    "size",              :default => 0.0
+    t.string   "title",                                                      :null => false
+    t.text     "code",              :limit => 2147483647,                    :null => false
+    t.text     "code_formatted",    :limit => 2147483647,                    :null => false
+    t.float    "size",                                    :default => 0.0
     t.integer  "language_id"
-    t.boolean  "private",           :default => false, :null => false
+    t.boolean  "private",                                 :default => false, :null => false
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "line_count",        :default => 0,     :null => false
-    t.text     "summary_formatted",                    :null => false
-    t.integer  "comments_count",    :default => 0
-    t.string   "desc"
-    t.integer  "views_count",       :default => 0,     :null => false
+    t.integer  "line_count",                              :default => 0,     :null => false
+    t.text     "summary_formatted",                                          :null => false
+    t.integer  "comments_count",                          :default => 0
+    t.string   "desc",              :limit => 2000
+    t.integer  "views_count",                             :default => 0,     :null => false
   end
+
+  add_index "snippets", ["language_id"], :name => "language_id_idx"
+  add_index "snippets", ["user_id"], :name => "user_id_idx"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

@@ -11,6 +11,7 @@ class Snippet < ActiveRecord::Base
 
   validates_presence_of :title,:code
   validates_length_of :title, :within => 2..200
+	validates_length_of :desc, :maximum => 2000
 
   before_save :format_code
 
