@@ -45,11 +45,11 @@
     <h3>Profile</h3>
     <ul>
       <li>        
-        <img src="<%= face_url(@user.email) %>" alt="<%= @user.name %>'s face" />
+        <img src="<%= face_url(@user.email) %>" alt="<%= h @user.name %>'s face" />
       </li>   
       <li><label>Name:</label> <%=h @user.name %></li>
       <li class="clearfix"><%= @user.snippets_count %> <label>snippts</label>, <%= @user.comments_count %> <label>comments</label></li>
-      <li><label>Blog:</label> <a href="<%=  @user.url %>" target="_blank"><%= @user.url %></a></li>
+      <li><label>Blog:</label> <a href="<%= h @user.url %>" target="_blank"><%=h @user.url %></a></li>
       <li><label>Bio:</label> <%=h @user.bio %></li>
     </ul>
   </div>    
