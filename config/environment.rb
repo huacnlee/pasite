@@ -66,7 +66,7 @@ APP_HOST = 'pasite.org'
 APP_DOMAIN  = "http://#{APP_HOST}"
 
 # custom configs
-APP_VERSION = '0.2.1'
+APP_VERSION = '0.3'
 
 APP_THEMES_NAMES = ['Active4D','Cobalt','Dawn','Mac Classic','LAZY','IDLE','BlackBoard','Twilight',
 	'Sunburst','SpaceCadet']
