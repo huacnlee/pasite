@@ -1,5 +1,6 @@
 .DS_Store
-log/*.log
+log/*
 tmp/**/*
 config/database.yml
-
+config/sphinx.yml
+config/*.sphinx.conf
