@@ -14,6 +14,18 @@ class Snippet < ActiveRecord::Base
 	validates_length_of :desc, :maximum => 2000
 
   before_save :format_code
+  
+  define_index do
+    indexes :title, :sortable => true
+    indexes :desc
+    indexes :code
+    has language_id, created_at, updated_at
+    set_property :field_weights => {
+      :title => 10,
+      :desc    => 6,
+      :code => 3
+    }
+  end
 
   def skip_before_filter
     return @skip_before_filter
@@ -57,11 +69,4 @@ class Snippet < ActiveRecord::Base
 			:order => "id desc",
 			:include => [:user,:language]
 	end
-
-  # == search snippets
-  #   keys => split by space, etc. "Ruby on Rails" => ["ruby","on","rails"]
-  def self.search_with_page(keys = [], options = {})
-    page = options[:page] || 1
-    Snippet.title_like_all_or_desc_like_all(keys).find_page(page)
-  end
 end

@@ -1,0 +1,7 @@
+development:
+  searchd_file_path: "/var/db/sphinx/pasite_development"
+test:
+  searchd_file_path: "/var/db/sphinx/pasite_test"
+production:
+  searchd_file_path: "/var/db/sphinx/pasite_production"
+	

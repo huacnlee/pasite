@@ -209,7 +209,10 @@ class SnippetsController < ApplicationController
       return
     end
     
-    @snippets = Snippet.search_with_page(params[:s].split("\s"),:page => params[:page])    
+    @snippets = Snippet.search(params[:s].split("\s"),
+            :page => params[:page],
+            :per_page => 8,
+            :include => [:user,:language])    
     @snippets_count = @snippets.count
     @sub_title = "Search snippets by \"#{params[:s]}\""
     render :action => "index"

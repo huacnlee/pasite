@@ -22,6 +22,8 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "systemu"
   config.gem "uuidtools"
+  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx'
+  # config.gem "ruby-openid"
   # config.gem "rmagick"	
 
   # Only load the plugins named here, in the order given (default is alphabetical).
@@ -64,7 +66,7 @@ APP_HOST = 'pasite.org'
 APP_DOMAIN  = "http://#{APP_HOST}"
 
 # custom configs
-APP_VERSION = '0.2.0'
+APP_VERSION = '0.2.1'
 
 APP_THEMES_NAMES = ['Active4D','Cobalt','Dawn','Mac Classic','LAZY','IDLE','BlackBoard','Twilight',
 	'Sunburst','SpaceCadet']
