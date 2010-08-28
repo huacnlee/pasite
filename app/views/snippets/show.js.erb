@@ -1,0 +1,2 @@
+document.write('<link href="<%= "#{APP_DOMAIN}/stylesheets/themes/#{params[:theme] || 'idle'}.css?v=#{Time.now.to_i}" %>" media="screen" rel="stylesheet" type="text/css" />');
+document.write('<%= escape_javascript raw @snippet.code_formatted_show %>');

@@ -4,4 +4,5 @@
 # Mime::Type.register "text/richtext", :rtf
 # Mime::Type.register_alias "text/html", :iphone
 Mime::Type.register "text/plain", :raw
+Mime::Type.register "text/plain", :js
 Mime::Type.register "text/plain", :code

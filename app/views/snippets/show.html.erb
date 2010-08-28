@@ -93,6 +93,9 @@
 		</select>
 	</div>
   </form>
+	<p class="box">
+		<label>Embed scripts</label><br /> <input onclick="$(this).select();" type="text" value="<script src='<%= snippet_url(@snippet,:format => "js",:theme => params[:theme]) %>' type='text/javascript'></script>" style="font-size: 0.75em;font-family: arial;width:190px;" />
+	</p>
 	<div style="margin: 1em 0pt 0em; font-size: 0.75em;">
 		<div style="float: left;">
 			<%= link_to (image_tag("button_raw.png",:alt => "view raw file")), :controller => "snippets", :action => "show", :format => :raw, :id => @snippet.id %>
