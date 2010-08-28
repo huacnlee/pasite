@@ -1,5 +1,5 @@
 # coding: utf-8  
-require "md5"
+require "digest/md5"
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   
@@ -31,7 +31,7 @@ module ApplicationHelper
 
   # return the Gravatar face by Email
   def face_url(email,size=128)
-    hash = MD5::md5(email)
+    hash = Digest::MD5.hexdigest(email)
     "http://www.gravatar.com/avatar/#{hash}?s=#{size}"
   end
 

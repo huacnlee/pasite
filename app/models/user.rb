@@ -1,4 +1,5 @@
 # coding: utf-8  
+require "digest/md5"
 class User < ActiveRecord::Base
   has_many :snippets	
   attr_protected :admin

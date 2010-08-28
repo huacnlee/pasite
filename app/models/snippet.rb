@@ -1,5 +1,5 @@
 # coding: utf-8  
-require "lib/highlight"
+require "highlight"
 class Snippet < ActiveRecord::Base
   attr_protected :views_count, :comments_count
   belongs_to :language, :counter_cache => true
