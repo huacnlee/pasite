@@ -2,7 +2,6 @@
 require 'systemu'
 require "uuidtools"
 require "fileutils"
-require 'string'
 
 # snippet highlight
 class Highlight    
