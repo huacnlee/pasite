@@ -1,9 +1,8 @@
-<% content_for :main do %>
+<%= content_for :main do %>
 <h2>Editing user</h2>
 <div id="user_edit">
-<% form_for(@user) do |f| %>
-  <%= f.error_messages %>
-	
+<%= form_for(@user, :url => user_path(@user)) do |f| %>
+  <%= render 'shared/error_messages', :target => @user %>
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
@@ -37,7 +36,7 @@
 <% end %>
 </div>
 <% end %>
-<% content_for :right do %>
+<%= content_for :right do %>
 	<div class="box">
 		<%= link_to 'Users list', users_path %>			
 	</div>

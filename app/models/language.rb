@@ -1,9 +1,8 @@
 class Language < ActiveRecord::Base
   has_many :snippets
   
-  before_save :before_save
-  
-  def before_save
+  before_save :count_snippets
+  def count_snippets
     self.snippets_count = self.snippets.count
   end
 

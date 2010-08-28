@@ -8,7 +8,7 @@ xml.rss(:version=>"2.0"){
       for item in @snippets
         xml.item do
           xml.title h(item.title)
-          xml.description item.code_formatted    
+          xml.description raw(item.code_formatted) 
           xml.author item.user == nil ? "Anonymous" : item.user.name       
           xml.pubDate(item.created_at.strftime("%a, %d %b %Y %H:%M:%S %z"))
           xml.link url_for(:host => APP_HOST,:controller => :snippets, :action => :show,:id => item.id)

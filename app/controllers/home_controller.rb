@@ -55,7 +55,7 @@ class HomeController < ApplicationController
 	
 	def settings
 		@user = @current_user		
-		if request.method == :put
+		if params[:_method] == 'put'
 			p = params[:user]
 			p[:admin] = @user.admin
 			if @user.update_attributes(p)
@@ -68,7 +68,8 @@ class HomeController < ApplicationController
 	end
 	
 	def password
-		if request.method == :put
+		if params[:_method] == 'put'
+		  logger.debug { "#{params[:old_passwd]}" }
       if @current_user.update_passwd(params[:old_passwd], params[:new_passwd], params[:confirm_passwd])
         success_notice("Password changed.")
         redirect_to :action => "password"

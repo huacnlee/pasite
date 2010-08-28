@@ -1,8 +1,8 @@
-<% content_for :main do %>
+<%= content_for :main do %>
 <h1>Editing language</h1>
 
-<% form_for(@language) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@language) do |f| %>
+  <%= render 'shared/error_messages', :target => @language %>
   <p>
     <%= f.label :name, "Name:" %><br />
     <%= f.text_field :name %>

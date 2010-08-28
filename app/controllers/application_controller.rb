@@ -4,9 +4,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  session :session_expires => 1.week.from_now
   # Scrub sensitive parameters from your log
-  filter_parameter_logging :passwd
   before_filter :init_filter
 
   def init_filter

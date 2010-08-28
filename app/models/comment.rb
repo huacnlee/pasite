@@ -15,9 +15,8 @@ class Comment < ActiveRecord::Base
   # NOTE: Comments belong to a user
   belongs_to :user, :counter_cache => true
 
-  before_create :before_create
-
-  def before_create
+  before_create :check_title
+  def check_title
     # check title not used in Users if commenter not logined
     if not self.user_id
       if User.find_by_name(self.title)

@@ -29,7 +29,7 @@
     </div>
 		<% if has_permission(snippet) or (snippet.private == false) %>
     <div class="summary">
-      <%= snippet.summary_formatted_show %>
+      <%= raw snippet.summary_formatted_show %>
     </div>
 		<% end %>
   </div>

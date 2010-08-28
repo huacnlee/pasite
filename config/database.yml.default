@@ -15,15 +15,15 @@
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 development:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: pasite_development
+  database: 'pasite_development'
   pool: 5
-  username: monster
-  password: 123123
-  host: 127.0.0.1
-  timeout: 5000
+  username: 'monster'
+  password: '123123'
+  host: '127.0.0.1'
+  timeout: '5000'
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -35,12 +35,12 @@ test:
   timeout: 5000
 
 production:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: pasite
+  database: 'pasite'
   pool: 5
-  username: monster
-  password: 123123
-  socket: /tmp/mysql.sock
-  timeout: 5000
+  username: 'monster'
+  password: '123123'
+  socket: '/tmp/mysql.sock'
+  timeout: '5000'

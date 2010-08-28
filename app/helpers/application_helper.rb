@@ -5,7 +5,7 @@ module ApplicationHelper
   # return the formatted flash[:notice] html
   def notice_message(mark = :default, scroll = false)
     if !flash[mark]
-      return ''
+      return raw ''
     end
     
     notice = flash[mark]
@@ -17,7 +17,7 @@ module ApplicationHelper
       	  $.scrollTo("#success_message_'+mark.to_s+'",200);</script>'
       end
     elsif notice[:notice_error]
-      result = '<div id="error_explanation_'+mark.to_s+'" class="errorExplanation">'+notice[:notice_error]+'</div>'
+      result = '<div id="error_explanation_'+mark.to_s+'" class="error_explanation">'+notice[:notice_error]+'</div>'
     	if scroll == true
         result += '<script type="text/javascript">$.scrollTo("#error_explanation_'+mark.to_s+'",200);</script>'
       end
@@ -25,12 +25,7 @@ module ApplicationHelper
       result = ''
     end
     
-    return result
-  end
-
-  # form auth token
-  def auth_token
-    "<input name=\"authenticity_token\" type=\"hidden\" value=\"#{form_authenticity_token}\" />"
+    return raw(result)
   end
 
   # return the Gravatar face by Email
@@ -56,14 +51,14 @@ module ApplicationHelper
 
   # format comment text
   def format_comment(comment)
-    return auto_link(simple_format(html_escape(comment)))
+    return raw(auto_link(simple_format(html_escape(comment))))
   end
   
   # remove all space or break in HTML
   def spaceless(&block)
     data = capture(&block)
     data = data.gsub(/>\s+</,"><")
-    concat(data)
+    raw(concat(data))
   end
   
   

@@ -471,10 +471,10 @@ table.grid { width:100%; border:1px solid #CCC;border-collapse:collapse;border-s
 	table.grid tr td.date { width:60px;}
 	table.grid tr td.status { width:38px;}
 
-.errorExplanation { font-size:12px; margin:10px 0; background:#FFF8E7; padding:10px; border: 2px solid #F96;}
-.errorExplanation h2 { font-size: 14px; line-height: 180%;}
-.errorExplanation p { color:#999;}
-.errorExplanation ul { font-size: 12px; margin-top: 8px; list-style: square inside; margin-left: 20px;}
+.error_explanation { font-size:12px; margin:10px 0; background:#FFF8E7; padding:10px; border: 2px solid #F96;}
+.error_explanation h2 { font-size: 14px; line-height: 180%;}
+.error_explanation p { color:#999;}
+.error_explanation ul { font-size: 12px; margin-top: 8px; list-style: square inside;padding:0; margin-left: 10px;}
 .filter { text-align: right; line-height: 22px; }
 	.filter label	{color: #999;}
 

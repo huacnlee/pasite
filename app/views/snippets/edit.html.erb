@@ -1,8 +1,8 @@
-<% content_for :main do %>
+<%= content_for :main do %>
 <h2>Editing snippet</h2>
 <div id="snippet_edit">
-<% form_for(@snippet) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@snippet) do |f| %>
+  <%= render 'shared/error_messages', :target => @snippet %>
   <div class="row">
     <%= f.label :title,"Title:" %>
     <%= f.text_field :title ,:class => "text"%>

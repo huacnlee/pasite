@@ -2,7 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => "snippets"
   map.resources :languages
   map.resources :comments
-  map.resources :users	
+  
+  
   map.resources :snippets, :as => "code", :collection => { :search => :get }
   map.connect "code/:id/comment",:controller => "snippets", :action => "show" ,:only => :post
   map.login "login",:controller => "home", :action => "login" 
@@ -16,7 +17,8 @@ ActionController::Routing::Routes.draw do |map|
   map.feed "feed",:controller => "snippets", :action => "index",:type => "feed"
   map.lang_feed "lang/:lang/feed",:controller => "snippets", :action => "index",:type => "feed"
   map.user_feed ":login/feed",:controller => "snippets", :action => "index",:type => "feed"
-  map.user ":login",:controller => "snippets", :action => "index"
+  map.resources :users
+  map.profile ":login",:controller => "snippets", :action => "index"
 
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

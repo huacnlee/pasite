@@ -1,4 +1,4 @@
-class String
+module StringExtensions
 
    require 'iconv' 
    require 'open-uri'      # cf. http://www.ruby-doc.org/stdlib/libdoc/open-uri/rdoc/index.html
@@ -722,3 +722,5 @@ class String
    end
 
 end
+
+String.send :include,StringExtensions

@@ -1,14 +1,14 @@
-<% content_for :styles do %>
+<%= content_for :styles do %>
     <%= stylesheet_link_tag "themes/#{@theme_name}.css" %>
 <% end %>
-<% content_for :scripts do %>
+<%= content_for :scripts do %>
 <% end %>
-<% content_for :main do %>
+<%= content_for :main do %>
 <%= notice_message %>
 <h2>#<%= @snippet.id %> <%=h @snippet.title %> <%= image_tag("icons/private.gif",:alt => "Private") if @snippet.private %></h2>
 <div id="snippet_show">	
 	<div class="snippet_code">		
-		<%=@snippet.code_formatted_show %>
+		<%= raw @snippet.code_formatted_show %>
 	</div>
   <% if !@snippet.desc.blank? %>
   <div class="desc">
@@ -48,8 +48,8 @@
 	<%= notice_message(:comments) %>
 	<div id="comment_new">
   	<div class="form">	
-  		<% form_for @comment,:url => "/code/#{params[:id]}/comment" do |f|%>
-  		<%= f.error_messages %>	  
+  		<%= form_for @comment,:url => "/code/#{params[:id]}/comment" do |f|%>
+  		<%= render 'shared/error_messages', :target => @comment %>
   		<% if @current_user %>
   		<%= f.hidden_field :title, :value => @current_user.name %>
   		<% else %>
@@ -59,9 +59,9 @@
   		</div>
     	<div class="row">
     	  <%= captcha_hidden_text %>
-    	  <%= captcha_input_text("Captcha:<br />") %><br /> 	  
+    	  <%= captcha_input_text(raw("Captcha:<br />")) %> <br />
         <label>Unregistered user must enter the Captcha, <%= link_to "login", login_path %> </label><br />
-    	  <%= captcha_image %> 	
+    	  <%= raw captcha_image %> 	
     	</div>
   		<% end %>
   		<div class="row">

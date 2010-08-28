@@ -4,7 +4,7 @@
 <div id="signin">
 	<% form_for @user,:url => "login" do |f| -%>
 		<% if flash[:errors] %>
-		<div class="errorExplanation">
+		<div class="error_explanation">
 			<%=h flash[:errors] %>
 		</div>
 		<% end %>
@@ -18,7 +18,7 @@
 		</p>
 		<p>		  
 		  <%= captcha_hidden_text %>
-		  <%= captcha_input_text("Captcha:<br />") %>		  
+		  <%= captcha_input_text(raw "Captcha:<br />") %>		  
 		</p>
 		<p>
 		  <%= captcha_image %> 
