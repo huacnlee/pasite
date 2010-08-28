@@ -1,3 +1,4 @@
+# coding: utf-8  
 class Mailer < ActionMailer::Base
   layout "mailer"
 

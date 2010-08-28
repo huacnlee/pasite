@@ -1,3 +1,4 @@
+# coding: utf-8  
 class HomeController < ApplicationController
 	before_filter :require_login, :only => [:settings]
 	validates_captcha

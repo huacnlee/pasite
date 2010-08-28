@@ -1,3 +1,4 @@
+# coding: utf-8  
 class LanguagesController < ApplicationController
 	before_filter :require_admin
 	

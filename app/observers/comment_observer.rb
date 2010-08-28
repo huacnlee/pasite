@@ -1,3 +1,4 @@
+# coding: utf-8  
 class CommentObserver < ActiveRecord::Observer 
   def after_create(comment)
     snippet = comment.commentable

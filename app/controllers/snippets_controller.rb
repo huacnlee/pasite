@@ -1,3 +1,4 @@
+# coding: utf-8  
 class SnippetsController < ApplicationController
   # GET /snippets
   # GET /snippets.xml

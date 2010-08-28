@@ -1,3 +1,4 @@
+# coding: utf-8  
 require "lib/highlight"
 require "lib/string"
 class Snippet < ActiveRecord::Base
