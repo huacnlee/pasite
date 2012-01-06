@@ -1,9 +1,9 @@
 <% content_for :main do %>
 	<%= notice_message %>
-	<h2>Register<h2>
+	<h2>Register</h2>
 	<div id="register">
-		<% form_for @user,:url => "register" do |f| -%>
-			<%= f.error_messages %>
+		<%= form_for @user,:url => "register" do |f| -%>
+      <%= errors_for(@user).html_safe %>
 			<p>
 		    <%= f.label :name ,"Nick name:"%><br />
 		    <%= f.text_field :name %>

@@ -1,3 +1,4 @@
+# encoding: utf-8
 module CaptchaHelper
     
    def captcha_image(options = {})

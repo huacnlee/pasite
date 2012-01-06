@@ -4,3 +4,4 @@ tmp/**/*
 config/database.yml
 config/sphinx.yml
 config/*.sphinx.conf
+*.swp

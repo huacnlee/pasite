@@ -1,8 +1,8 @@
 <% content_for :main do %>
 <h2>Settings</h2>
 <div id="settings">
-	<% form_for(@user,:url => "") do |f| %>
-	  <%= f.error_messages %>
+	<%= form_for(@user,:url => "") do |f| %>
+	  <%= errors_for @user %>
 		<%= notice_message %>
 		<p>
 	    <%= f.label :login, "User name:" %><br />
@@ -12,7 +12,7 @@
 			<%= f.label :face , "Face:"%> <br />
 			<img src="<%= face_url(@user.email) %>" alt="face" /><br />
 			<a href="http://www.gravatar.com/">Change from gravatar</a> <label>(by Email)</label>
-		</p>	  
+		</p>
 		<p>
 	    <%= f.label :name, "Nick name:" %><br />
 	    <%= f.text_field :name %>

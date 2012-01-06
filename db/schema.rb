@@ -1,15 +1,17 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100524221809) do
+ActiveRecord::Schema.define(:version => 20120106054410) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -34,24 +36,22 @@ ActiveRecord::Schema.define(:version => 20100524221809) do
   end
 
   create_table "snippets", :force => true do |t|
-    t.string   "title",                                                      :null => false
-    t.text     "code",              :limit => 2147483647,                    :null => false
-    t.text     "code_formatted",    :limit => 2147483647,                    :null => false
-    t.float    "size",                                    :default => 0.0
+    t.string   "title",                                                :null => false
+    t.text     "code",                                                 :null => false
+    t.text     "code_formatted",                                       :null => false
+    t.float    "size",                              :default => 0.0
     t.integer  "language_id"
-    t.boolean  "private",                                 :default => false, :null => false
+    t.boolean  "private",                           :default => false, :null => false
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "line_count",                              :default => 0,     :null => false
-    t.text     "summary_formatted",                                          :null => false
-    t.integer  "comments_count",                          :default => 0
+    t.integer  "line_count",                        :default => 0,     :null => false
+    t.text     "summary_formatted",                                    :null => false
+    t.integer  "comments_count",                    :default => 0
     t.string   "desc",              :limit => 2000
-    t.integer  "views_count",                             :default => 0,     :null => false
+    t.integer  "views_count",                       :default => 0,     :null => false
+    t.boolean  "delta",                             :default => true,  :null => false
   end
-
-  add_index "snippets", ["language_id"], :name => "language_id_idx"
-  add_index "snippets", ["user_id"], :name => "user_id_idx"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
