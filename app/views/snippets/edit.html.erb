@@ -1,24 +1,24 @@
 <% content_for :main do %>
 <h2>Editing snippet</h2>
 <div id="snippet_edit">
-<% form_for(@snippet) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@snippet) do |f| %>
+  <%= errors_for(@snippet) %>
   <div class="row">
     <%= f.label :title,"Title:" %>
     <%= f.text_field :title ,:class => "text"%>
 		<div  style="float: right;">
 			<%= f.label :language, "Language:" %>
-			<% languages_array = Language.all.map { |l| [l.name, l.id] } %>		
-			<%= f.select(:language_id,languages_array) %>		
+			<% languages_array = Language.all.map { |l| [l.name, l.id] } %>
+			<%= f.select(:language_id,languages_array) %>
 			<% if @current_user %>
 			<%= f.check_box :private %>
-			<%= f.label :private, (image_tag("icons/private.gif",:alt => "Private")) %>		
+			<%= f.label :private, (image_tag("icons/private.gif",:alt => "Private")) %>
 			<% end %>
 		</div>
   </div>
   <div class="row">
     <%= f.label :code,"Source code:" %><br />
-		<%= f.text_area :code, :class => "pastebox" %>    
+		<%= f.text_area :code, :class => "pastebox" %>
   </div>
   <div class="row">
     <%= f.label :desc, "Description:" %><br />
@@ -26,18 +26,11 @@
 		<samp class="hint">Descrption of your code, maximum limit 2000.</samp>
   </div>
 	<div class="row">
-		<%= f.label :tags, "Tags:" %><br />		
+		<%= f.label :tags, "Tags:" %><br />
 		<%= text_field_tag("snippet[tag_list]",@snippet.tags.join(","),:class => "text long") %><br />
 		<samp class="hint">Split with comma between Tag, for example: mysql,linux,performance,cache</samp>
 	</div>
-	<% if @current_user.blank? %>
-	<div class="row">
-	  <%= captcha_hidden_text %>
-	  <%= captcha_input_text("Captcha:<br />") %><br /> 	  
-    <label>Unregistered user must enter the Captcha, <%= link_to "login", login_path %> </label><br />
-	  <%= captcha_image %> 	
-	</div>		
-	<% end %>
+
   <div class="submit">
     <%= f.submit 'Save', :class => "submit" %> or
 		<%= link_to 'Back', snippets_path %>

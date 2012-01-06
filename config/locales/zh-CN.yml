@@ -1,0 +1,24 @@
+# Chinese (China) translations for Ruby on Rails
+# by tsechingho (http://github.com/tsechingho)
+
+'zh-CN':
+  activerecord:
+    models:
+      user: "用户资料"
+      snippet: "代码片段"
+      comment: "评论"
+      language: "语言"
+    attributes:
+      user:
+        name: "Nick name"
+        login: "User name"
+        passwd: "Password"
+        email: "Email"
+        bio: "Bio"
+        url: "Blog"
+      snippet:
+        title: "Title"
+        code: "Source Code"
+
+
+

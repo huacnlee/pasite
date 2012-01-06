@@ -1,3 +1,4 @@
+# encoding: utf-8
 class SnippetSweeper < ActionController::Caching::Sweeper
   observe Snippet
 

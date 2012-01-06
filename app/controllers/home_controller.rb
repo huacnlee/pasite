@@ -1,10 +1,11 @@
+# encoding: utf-8
 class HomeController < ApplicationController
 	before_filter :require_login, :only => [:settings]
-	validates_captcha
-	
-	def register		
+	#validates_captcha
+
+	def register
 		@user = User.new
-		
+
 		if params[:user]
 			@user = User.new(params[:user])
             passwd_unencoded = @user.passwd
@@ -18,43 +19,38 @@ class HomeController < ApplicationController
 				return
 			end
 		end
-		set_seo_meta("Register")
+		#set_seo_meta("Register")
 		render :action => "register"
-		
+
 	end
-	
+
 	# login
   def login
     @user = User.new
-    
+
     if params[:user]
-      if !captcha_validated?
-        flash[:errors] = "Captcha not match."        
+      @user = User.check_login(params[:user][:email], User.encode(params[:user][:passwd]))
+      if @user
+        save_login(@user)
+        redirect_to "/"
+        return
       else
-        @user = User.check_login(params[:user][:email], User.encode(params[:user][:passwd]))
-              
-        if @user
-          save_login(@user)
-          redirect_to "/"
-          return
-        else
-          @user = User.new
-          flash[:errors] = "Invalid login name/email or password."
-        end
+        @user = User.new
+        flash[:errors] = "Invalid login name/email or password."
       end
     end
-    
+
 		set_seo_meta("Login")
     render :action => "login"
   end
-	
+
 	def logout
 		clear_login
 		redirect_to "/"
 	end
-	
+
 	def settings
-		@user = @current_user		
+		@user = @current_user
 		if request.method == :put
 			p = params[:user]
 			p[:admin] = @user.admin
@@ -66,7 +62,7 @@ class HomeController < ApplicationController
       end
 		end
 	end
-	
+
 	def password
 		if request.method == :put
       if @current_user.update_passwd(params[:old_passwd], params[:new_passwd], params[:confirm_passwd])
@@ -79,7 +75,7 @@ class HomeController < ApplicationController
 	def help
 		set_seo_meta("Help")
 	end
-  
+
   def links
     set_seo_meta("Links")
   end

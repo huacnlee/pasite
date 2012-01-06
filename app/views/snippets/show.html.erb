@@ -6,8 +6,8 @@
 <% content_for :main do %>
 <%= notice_message %>
 <h2>#<%= @snippet.id %> <%=h @snippet.title %> <%= image_tag("icons/private.gif",:alt => "Private") if @snippet.private %></h2>
-<div id="snippet_show">	
-	<div class="snippet_code">		
+<div id="snippet_show">
+	<div class="snippet_code">
 		<%=@snippet.code_formatted_show %>
 	</div>
   <% if !@snippet.desc.blank? %>
@@ -18,9 +18,9 @@
 	<div class="comments" id="comments">
 	  <h2>Comments<span class="count">(<%= @snippet.comments_count %>)</span></h2>
 	  <% i = 0 %>
-	  <% if !@snippet.comments.blank? %>
+    <%  if  !@snippet.comments.blank? %>
 		  <% for item in @snippet.comments %>
-		  <% i += 1 %>
+        <%  i += 1 %>
     <div class="item<%= " itemse" if i % 2 == 0 %>">
       <div class="meta">
         #<%= i %> <% if item.user %>
@@ -36,51 +36,45 @@
           <% end %>
         </div>
         <%= format_comment(item.comment) %>
-      </div>      
+      </div>
     </div>
 		  <% end %>
 		<% else %>
 		<div class="item">
 		    No comment.
 		</div>
-		<% end %>	  				
-	</div>	
+		<% end %>
+	</div>
 	<%= notice_message(:comments) %>
 	<div id="comment_new">
-  	<div class="form">	
-  		<% form_for @comment,:url => "/code/#{params[:id]}/comment" do |f|%>
-  		<%= f.error_messages %>	  
+  	<div class="form">
+  		<%= form_for @comment,:url => "/code/#{params[:id]}/comment" do |f|%>
+  		<%= errors_for(@comment) %>
   		<% if @current_user %>
   		<%= f.hidden_field :title, :value => @current_user.name %>
   		<% else %>
       <div class="row">
         <%= f.label :title,"Name:" %><br />
-        <%= f.text_field :title ,:class => "short" %>				
+        <%= f.text_field :title ,:class => "short" %>
   		</div>
-    	<div class="row">
-    	  <%= captcha_hidden_text %>
-    	  <%= captcha_input_text("Captcha:<br />") %><br /> 	  
-        <label>Unregistered user must enter the Captcha, <%= link_to "login", login_path %> </label><br />
-    	  <%= captcha_image %> 	
-    	</div>
   		<% end %>
   		<div class="row">
         <%= f.label :comment,"Comment:" %><br />
-        <%= f.text_area :comment ,:class => "text", :rows => 4, :cols => 50 %>				
+        <%= f.text_area :comment ,:class => "text", :rows => 4, :cols => 50 %>
   		</div>
   		<div class="row">
   		  <%= f.submit "Post comment", :disable_with => 'Submiting...' %>
   		</div>
-  	  <% end %>		
-  	</div>	
+  	  <% end %>
+  	</div>
 	</div>
 </div>
 <% end %>
 <% content_for :right do %>
   <form action="" method="get">
-	<div class="theme">	  
+	<div class="theme">
 		<label>Theme:</label><br />
-		<select name="theme" onchange="this.form.submit();">		  
+		<select name="theme" onchange="this.form.submit();">
 		  <% if !APP_THEMES.blank? %>
 		    <% i = 0 %>
 		    <% for item in APP_THEMES %>
@@ -121,14 +115,14 @@
 	</p>
   <p class="box">
     <label>Views count<label><br />
-    <%=h @snippet.views_count_s  %>
+    <%=h @snippet.views_count  %>
   </p>
 	<p class="box tags">
 		<% if !@snippet.tags.blank? %>
-		<label>Tags</label><br />		
+		<label>Tags</label><br />
 		  <% for item in @snippet.tags %>
 		    <span class="tag_name"><%= link_to (h item.name), :controller => "snippets", :action => "index", :tag => (h item.name.downcase) %></span>
-		  <% end %>		
+		  <% end %>
 		<% end %>
 	</p>
 	<% if has_permission(@snippet) %>
