@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Language < ActiveRecord::Base
   has_many :snippets
   

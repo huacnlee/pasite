@@ -1,3 +1,4 @@
+# encoding: utf-8
 class CreateSnippets < ActiveRecord::Migration
   def self.up
     create_table :snippets do |t|

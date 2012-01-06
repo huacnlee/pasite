@@ -1,3 +1,4 @@
+# encoding: utf-8
 begin
   require 'RMagick' 
 rescue Exception => e

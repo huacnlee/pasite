@@ -1,21 +1,22 @@
+# encoding: utf-8
 class SnippetsController < ApplicationController
   # GET /snippets
   # GET /snippets.xml
   before_filter :require_login, :only => [:edit,:update,:destroy]
   before_filter :init_sidebar, :only => [:index, :search]
   validates_captcha
-  
+
   private
   def init_sidebar
-    @top_languages = Language.find_top      
+    @top_languages = Language.find_top
     if not @user
       @top_users = User.find_top_by_snippets_count
       @recent_comments = Comment.snippet_recent(5)
     end
   end
-  
+
   public
-  def index 
+  def index
     @sub_title = ""
     @snippets_count = 0
     if params[:lang]
@@ -27,7 +28,7 @@ class SnippetsController < ApplicationController
         @feed_title = "#{@language.name}"
         set_seo_meta("Snippets &raquo; #{@language.name} language")
       end
-    elsif params[:tag]          
+    elsif params[:tag]
       @snippets = Snippet.tagged_with(params[:tag],:on => :tags).find_page(params[:page])
       @snippets_count = Snippet.tagged_with(params[:tag],:on => :tags).count(:select => "*")
       @sub_title = "Listing #{params[:tag]} snippets"
@@ -48,8 +49,8 @@ class SnippetsController < ApplicationController
       @sub_title = "Listing snippets"
       @feed_title = "Recent snippets"
       set_seo_meta(nil)
-    end   
-    
+    end
+
     if params[:type] == "feed"
       # Set the content type to the standard one for RSS
       response.headers['Content-Type'] = 'application/rss+xml'
@@ -66,8 +67,8 @@ class SnippetsController < ApplicationController
   # GET /snippets/1.xml
   def show
     @snippet = Snippet.find(params[:id],:include => [:user,:tags,:comments])
-    @snippet.update_views_count
-            
+    @snippet.update_attributes({:views_count => @snippet.views_count + 1})
+
     # theme
     @theme_name = "idle"
     if params[:theme]
@@ -80,7 +81,7 @@ class SnippetsController < ApplicationController
         @theme_name = session[:theme_name]
       end
     end
-    
+
     if @snippet.private
       return if not require_login
       if not(@current_user.id == @snippet.user_id or @current_user.admin)
@@ -88,25 +89,19 @@ class SnippetsController < ApplicationController
         return
       end
     end
-    
+
     if request.post?
       pcomment = params[:comment]
+      @comment = @snippet.comments.new(:title => pcomment[:title],:user => @current_user,:comment => pcomment[:comment])
 
-      @comment = @snippet.comments.new(:title => pcomment[:title],:user => @current_user,:comment => pcomment[:comment])       
-      if !captcha_validated? and !@current_user
-        @comment.errors.add("captcha","不正确，请检查")    
-        render :action => "show",:archor => "comments"
+      if @comment.save
+        success_notice('Comment successfully created.', :comments)
+        redirect_to snippet_path(params[:id],:anchor => "comments")
       else
-        
-        if @comment.save
-          success_notice('Comment successfully created.', :comments)
-          redirect_to snippet_path(params[:id],:anchor => "comments")
-        else
-          render :action => "show",:archor => "comments"
-        end     
+        render :action => "show",:archor => "comments"
       end
-    else            
-      @comment = @snippet.comments.new
+    else
+      @comment = Comment.new
       set_seo_meta("##{@snippet.id} #{@snippet.title}")
 
       respond_to do |format|
@@ -117,7 +112,7 @@ class SnippetsController < ApplicationController
       end
     end
   end
-    
+
   # GET /snippets/new
   # GET /snippets/new.xml
   def new
@@ -142,35 +137,27 @@ class SnippetsController < ApplicationController
     if @current_user
       @snippet.user_id = @current_user.id
     else
-      if !captcha_validated?
-        @snippet.errors.add("captcha","不正确，请检查")       
-      end
       @snippet.user_id = nil
     end
-    
-    if @snippet.errors.size > 0
-      render :action => "edit"
-    else
-      respond_to do |format|
-        if @snippet.save
-          success_notice('Snippet was successfully created.')
-          format.html { redirect_to(@snippet) }
-          format.xml  { render :xml => @snippet, :status => :created, :location => @snippet }
-        else
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @snippet.errors, :status => :unprocessable_entity }
-        end
+
+    respond_to do |format|
+      if @snippet.save
+        success_notice('Snippet was successfully created.')
+        format.html { redirect_to(@snippet) }
+        format.xml  { render :xml => @snippet, :status => :created, :location => @snippet }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @snippet.errors, :status => :unprocessable_entity }
       end
     end
 
-    
   end
 
   # PUT /snippets/1
   # PUT /snippets/1.xml
   def update
     @snippet = Snippet.find(params[:id])
-        
+
     respond_to do |format|
       if @snippet.update_attributes(params[:snippet])
         success_notice('Snippet was successfully updated.')
@@ -195,26 +182,21 @@ class SnippetsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def search
-    if !@current_user
-      error_notice("Sorry, currently only allows registered users to use search function, <br />
-      you can register and sign in before using this feature.")
-      redirect_to register_path
-      return
-    end
-    
+
     if params[:s].blank?
       redirect_to snippets_path
       return
     end
-    
+
     @snippets = Snippet.search(params[:s].split("\s"),
             :page => params[:page],
             :per_page => 8,
-            :include => [:user,:language])    
+            :include => [:user,:language])
     @snippets_count = @snippets.count
     @sub_title = "Search snippets by \"#{params[:s]}\""
     render :action => "index"
+
   end
 end

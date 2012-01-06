@@ -1,6 +1,7 @@
+# encoding: utf-8
 class CommentsController < ApplicationController
 	before_filter :require_admin
-	
+
   # GET /comments
   # GET /comments.xml
   def index
@@ -11,7 +12,7 @@ class CommentsController < ApplicationController
       format.xml  { render :xml => @comments }
     end
   end
-  
+
   # DELETE /comments/1
   # DELETE /comments/1.xml
   def destroy
